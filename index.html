@@ -62,7 +62,7 @@
   #overview .overview-stats{display:contents}
   #overview{display:block}
   #overview .location{min-height:0}
-  #overview .grid.two{grid-template-columns:repeat(2,minmax(280px,380px));justify-content:center;align-items:stretch;margin-inline:auto}
+  #overview .grid.two{grid-template-columns:repeat(2,minmax(0,1fr));max-width:900px;margin-inline:auto}
 
   .two{grid-template-columns:1fr 1fr}
   .three{grid-template-columns:repeat(3,1fr)}
@@ -148,6 +148,26 @@
     .timeline-item{grid-template-columns:72px 16px 1fr}
     table{display:block;overflow:auto}
   }
+
+  /* Centered desktop layout */
+  main > section, body > section {
+    width: min(1180px, calc(100% - 48px));
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+  #overview .grid.two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (max-width: 760px) {
+    main > section, body > section { width: calc(100% - 24px); }
+    #overview .grid.two { grid-template-columns: 1fr; max-width: 420px; }
+  }
+
 </style>
 </head>
 <body>
@@ -177,10 +197,7 @@
   </header>
 
   <section id="overview">
-    <div class="section-title"><h2>Overview</h2><span>najbitnije na jednom mestu</span></div>
-      <div class="card stat accent-d"><div class="label">Budžet</div><div class="value"><span id="overviewBudget">13.000</span></div><div class="pill">RSD trenutno</div></div>
-    </div>
-
+    <div class="section-title"><h2>Overview</h2><span>lokacije</span></div>
     <div class="grid two">
       <div class="card location accent-b">
         <span class="pill">1. lokacija</span>
