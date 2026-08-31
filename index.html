@@ -48,7 +48,7 @@
   .hero-note .date{font-size:26px;font-weight:800}
   .count{font-size:14px;color:#405555}
   nav{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0}
-  nav a{
+  nav a{white-space:nowrap;
     text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
     padding:9px 13px;border-radius:999px;font-size:14px
   }
@@ -167,7 +167,6 @@
     main > section, body > section { width: calc(100% - 24px); }
     #overview .grid.two { grid-template-columns: 1fr; max-width: 420px; }
   }
-
 </style>
 </head>
 <body>
@@ -179,10 +178,8 @@
       <div class="sub">Escape room avantura</div>
       <nav>
         <a href="#overview">Overview</a>
-        <a href="#guests">Gosti</a>
+        <a href="#guests">Gosti &amp; Budžet</a>
         <a href="#tasks">Checklist</a>
-        <a href="#budget">Budžet</a>
-        <a href="#schedule">Program</a>
         <a href="#activities">Aktivnosti</a>
       </nav>
     </div>
@@ -197,7 +194,7 @@
   </header>
 
   <section id="overview">
-    <div class="section-title"><h2>Overview</h2><span>lokacije</span></div>
+    <div class="section-title"><h2>Overview</h2></div>
     <div class="grid two">
       <div class="card location accent-b">
         <span class="pill">1. lokacija</span>
@@ -217,7 +214,7 @@
 
 
   <section id="schedule">
-    <div class="section-title"><h2>Time line</h2><span>radna verzija satnice</span></div>
+    <div class="section-title"><h2>Time line</h2></div>
     <div class="card timeline">
       <div class="timeline-item"><div class="time">15:45</div><div class="dot"></div><div class="desc"><b>Okupljanje</b><br><small>PIN Escape Rooms 3 – Sklonište</small></div></div>
       <div class="timeline-item"><div class="time">16:00</div><div class="dot"></div><div class="desc"><b>Escape room</b><br><small>2 grupe: Divlji zapad + Put oko sveta</small></div></div>
@@ -230,7 +227,7 @@
   <section id="guests">
     <div class="grid guest-budget-layout">
       <div>
-        <div class="section-title"><h2>Gosti</h2></div>
+        <div class="section-title"><h2>Gosti &amp; Budžet</h2></div>
         <div class="card guest-card">
           <table id="guestTable">
             <thead><tr><th>#</th><th>Ime i prezime</th><th>Potvrđen dolazak</th></tr></thead>
@@ -355,20 +352,20 @@ function renderBudget(){
 }
 function renderStats(){
  const confirmed=state.guests.filter(g=>g.rsvp==='Da').length;
- document.getElementById('guestCount').textContent=confirmed;
+ const guestCount=document.getElementById('guestCount'); if(guestCount) guestCount.textContent=confirmed;
  const waiting=state.guests.filter(g=>g.rsvp==='Čekamo').length;
  const no=state.guests.filter(g=>g.rsvp==='Ne').length;
  const side=document.getElementById('guestCountSide'); if(side) side.textContent=confirmed;
  const waitEl=document.getElementById('waitingCount'); if(waitEl) waitEl.textContent=waiting;
  const noEl=document.getElementById('noCount'); if(noEl) noEl.textContent=no;
  const done=state.tasks.filter(t=>t.done).length,total=state.tasks.length;
- document.getElementById('taskDone').textContent=done;
- document.getElementById('taskTotal').textContent=total;
- document.getElementById('taskProgress').style.width=(total?done/total*100:0)+'%';
+ const taskDone=document.getElementById('taskDone'); if(taskDone) taskDone.textContent=done;
+ const taskTotal=document.getElementById('taskTotal'); if(taskTotal) taskTotal.textContent=total;
+ const taskProgress=document.getElementById('taskProgress'); if(taskProgress) taskProgress.style.width=(total?done/total*100:0)+'%';
  const sum=state.budget.reduce((a,b)=>a+Number(b.amount||0),0);
  const f=new Intl.NumberFormat('sr-RS');
- document.getElementById('budgetTotal').textContent=f.format(sum);
- document.getElementById('overviewBudget').textContent=f.format(sum);
+ const budgetTotal=document.getElementById('budgetTotal'); if(budgetTotal) budgetTotal.textContent=f.format(sum);
+ const overviewBudget=document.getElementById('overviewBudget'); if(overviewBudget) overviewBudget.textContent=f.format(sum);
 }
 function countdown(){
  const target=new Date('2026-09-26T16:00:00+02:00');
