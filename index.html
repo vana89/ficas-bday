@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fićin 9. rođendan 🎉</title>
+<style>
+  :root{
+    --bg:#f6f1ea;
+    --card:#fffdf9;
+    --ink:#2f3340;
+    --muted:#7b7d86;
+    --accent:#f3b39f;
+    --accent2:#9fc7c4;
+    --accent3:#e9d7a8;
+    --accent4:#c8b6e2;
+    --line:#e8e0d8;
+    --ok:#b9d9c2;
+    --shadow:0 12px 30px rgba(51,45,40,.08);
+    --radius:22px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:linear-gradient(180deg,#f7f3ed 0%,#f5efe7 100%);
+    color:var(--ink);
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 18px 80px}
+  header{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:30px;
+    padding:28px;
+    box-shadow:var(--shadow);
+    display:grid;
+    grid-template-columns:1.4fr .8fr;
+    gap:22px;
+    align-items:center;
+  }
+  .eyebrow{font-size:13px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);font-weight:700}
+  h1{font-size:48px;line-height:1.03;margin:8px 0 10px}
+  .sub{color:var(--muted);font-size:17px}
+  .hero-note{
+    background:linear-gradient(135deg,var(--accent2),#d8ebe9);
+    border-radius:24px;padding:22px;min-height:160px;display:flex;flex-direction:column;justify-content:space-between
+  }
+  .hero-note .date{font-size:26px;font-weight:800}
+  .count{font-size:14px;color:#405555}
+  nav{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0}
+  nav a{
+    text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);
+    padding:9px 13px;border-radius:999px;font-size:14px
+  }
+  section{margin-top:24px}
+  .section-title{display:flex;justify-content:space-between;align-items:end;margin:0 0 12px}
+  .section-title h2{margin:0;font-size:24px}
+  .section-title span{color:var(--muted);font-size:14px}
+  .grid{display:grid;gap:16px}
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .overview-stats{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none}
+  #overview .overview-stats{display:contents}
+  #overview{display:block}
+  #overview .location{min-height:0}
+  #overview .grid.two{grid-template-columns:repeat(2,minmax(280px,380px));justify-content:center;align-items:stretch;margin-inline:auto}
+
+  .two{grid-template-columns:1fr 1fr}
+  .three{grid-template-columns:repeat(3,1fr)}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;box-shadow:var(--shadow)
+  }
+  .stat .label{color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.09em}
+  .stat .value{font-size:30px;font-weight:800;margin-top:7px}
+  .pill{display:inline-flex;padding:6px 10px;border-radius:999px;background:#f0eee9;font-size:12px;color:#666}
+  .location{display:flex;flex-direction:column;gap:9px}
+  .location strong{font-size:18px}
+  .location .meta{font-size:14px;color:var(--muted);line-height:1.5}
+  .timeline{display:grid;gap:10px}
+  .timeline-item{display:grid;grid-template-columns:90px 18px 1fr;gap:12px;align-items:start}
+  .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);margin-top:5px}
+  .time{font-weight:800}
+  .desc small{color:var(--muted)}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:11px 8px;border-bottom:1px solid var(--line);text-align:left;font-size:14px;vertical-align:middle}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  input[type="text"], input[type="number"], select{
+    width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)
+  }
+  input[type="checkbox"]{width:18px;height:18px}
+
+  .rsvp-select{
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight:600;
+    color:#3f4652;
+    background:#f6f2fb;
+    border:1px solid #ddd3eb;
+    border-radius:999px;
+    padding:8px 30px 8px 12px;
+  }
+
+  .task-done td{text-decoration:line-through;color:#999}
+  .budget-total{font-size:28px;font-weight:800}
+  .budget-line{display:flex;justify-content:space-between;margin:8px 0;color:var(--muted)}
+  .progress{height:12px;background:#eee8e1;border-radius:999px;overflow:hidden;margin-top:10px}
+  .progress>div{height:100%;background:linear-gradient(90deg,var(--accent2),#7fb8b3);width:0%}
+  .activity{min-height:135px}
+  .activity h3{margin:4px 0 8px}
+  .activity p{color:var(--muted);font-size:14px;line-height:1.45}
+  .tag{font-size:12px;font-weight:700;color:#5f5d65}
+
+  .guest-layout{grid-template-columns:minmax(0,1.45fr) minmax(250px,.55fr);align-items:start}
+
+  .guest-budget-layout{grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  .guest-budget-layout .section-title{min-height:36px}
+  .budget-footer td{border-bottom:0;border-top:2px solid var(--line);padding-top:14px;font-size:15px}
+
+  .guest-card{padding:14px 16px}
+  .guest-only{max-width:720px}
+  .guest-card th,.guest-card td{padding:7px 6px}
+  .guest-card th:first-child,.guest-card td:first-child{width:36px}
+  .guest-card th:last-child,.guest-card td:last-child{width:175px}
+  .guest-card input[type="text"]{padding:7px 9px}
+  .guest-card .rsvp-select{padding:6px 28px 6px 10px}
+  .quick-card{padding:20px}
+  .quick-stat{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+  .quick-stat span{color:var(--muted);font-size:14px}
+  .quick-stat b{font-size:18px}
+  .mini-note{margin-top:16px;padding:12px;border-radius:14px;background:rgba(255,255,255,.65);font-size:13px;line-height:1.45}
+
+  .footer-note{margin-top:24px;color:var(--muted);font-size:13px;text-align:center}
+  .accent-a{background:linear-gradient(180deg,#fffdf9,#fff3ee)}
+  .accent-b{background:linear-gradient(180deg,#fffdf9,#f1f8f7)}
+  .accent-c{background:linear-gradient(180deg,#fffdf9,#fbf5e7)}
+  .accent-d{background:linear-gradient(180deg,#fffdf9,#f5f0fb)}
+  @media(max-width:900px){
+    header{grid-template-columns:1fr}
+    h1{font-size:38px}
+    .stats,.three,.two,.overview-stats{grid-template-columns:1fr 1fr}
+    .guest-layout{grid-template-columns:1fr}
+    .guest-budget-layout{grid-template-columns:1fr}
+  }
+  @media(max-width:620px){
+    .stats,.three,.two,.overview-stats{grid-template-columns:1fr}
+    #overview .grid.two{grid-template-columns:1fr;max-width:420px}
+    .guest-layout{grid-template-columns:1fr}
+    .guest-budget-layout{grid-template-columns:1fr}
+    .timeline-item{grid-template-columns:72px 16px 1fr}
+    table{display:block;overflow:auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Birthday planner 2026</div>
+      <h1>Fićin 9. rođendan 🎉</h1>
+      <div class="sub">Escape room avantura</div>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#guests">Gosti</a>
+        <a href="#tasks">Checklist</a>
+        <a href="#budget">Budžet</a>
+        <a href="#schedule">Program</a>
+        <a href="#activities">Aktivnosti</a>
+      </nav>
+    </div>
+    <div class="hero-note">
+      <div>
+        <div class="eyebrow">Datum</div>
+        <div class="date">26. septembar 2026.</div>
+        <div style="margin-top:6px">Početak u 16:00 p.m</div>
+      </div>
+      <div class="count" id="countdown">Računam koliko je ostalo…</div>
+    </div>
+  </header>
+
+  <section id="overview">
+    <div class="section-title"><h2>Overview</h2><span>najbitnije na jednom mestu</span></div>
+      <div class="card stat accent-d"><div class="label">Budžet</div><div class="value"><span id="overviewBudget">13.000</span></div><div class="pill">RSD trenutno</div></div>
+    </div>
+
+    <div class="grid two">
+      <div class="card location accent-b">
+        <span class="pill">1. lokacija</span>
+        <strong>PIN Escape Rooms 3 – Sklonište</strong>
+        <div class="meta">Bulevar Zorana Đinđića 94, Beograd<br>Divlji zapad + Put oko sveta<br>Max 10 dece</div>
+        <a href="https://www.pinescape.rs/#sobe" target="_blank">Otvori sajt ↗</a>
+      </div>
+      <div class="card location accent-a">
+        <span class="pill">2. lokacija</span>
+        <strong>Kuća</strong>
+        <div class="meta">Bulevar Mihajla Pupina 161<br>Posluženje, igra i krofne<br>Nastavak druženja nakon Escape room-a</div>
+      </div>
+    </div>
+
+  </section>
+
+
+
+  <section id="schedule">
+    <div class="section-title"><h2>Time line</h2><span>radna verzija satnice</span></div>
+    <div class="card timeline">
+      <div class="timeline-item"><div class="time">15:45</div><div class="dot"></div><div class="desc"><b>Okupljanje</b><br><small>PIN Escape Rooms 3 – Sklonište</small></div></div>
+      <div class="timeline-item"><div class="time">16:00</div><div class="dot"></div><div class="desc"><b>Escape room</b><br><small>2 grupe: Divlji zapad + Put oko sveta</small></div></div>
+      <div class="timeline-item"><div class="time">17:15</div><div class="dot"></div><div class="desc"><b>Dolazak kući i posluženje</b><br><small>Bulevar Mihajla Pupina 161</small></div></div>
+      <div class="timeline-item"><div class="time">17:30</div><div class="dot"></div><div class="desc"><b>Igra i druženje</b><br><small>Sony, društvene igre, slobodna igra i rezervne aktivnosti</small></div></div>
+      <div class="timeline-item"><div class="time">18:30</div><div class="dot"></div><div class="desc"><b>Krofne 🍩</b><br><small>Umesto rođendanske torte • Pekara Miloš</small></div></div>
+    </div>
+  </section>
+
+  <section id="guests">
+    <div class="grid guest-budget-layout">
+      <div>
+        <div class="section-title"><h2>Gosti</h2></div>
+        <div class="card guest-card">
+          <table id="guestTable">
+            <thead><tr><th>#</th><th>Ime i prezime</th><th>Potvrđen dolazak</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <div style="margin-top:10px;color:var(--muted);font-size:12px">Promene se automatski čuvaju u browseru.</div>
+        </div>
+      </div>
+      <div id="budget">
+        <div class="section-title"><h2>Budžet</h2><span>planirano</span></div>
+        <div class="card">
+          <table id="budgetTable">
+            <thead><tr><th>Stavka</th><th>Planirano RSD</th></tr></thead>
+            <tbody>
+          <tr><td>Escape room – Divlji zapad</td><td><input class="budget-input" type="number" min="0" step="100" value="6500" data-budget-index="0"></td></tr>
+          <tr><td>Escape room – Put oko sveta</td><td><input class="budget-input" type="number" min="0" step="100" value="6500" data-budget-index="1"></td></tr>
+          <tr><td>Krofne – Pekara Miloš</td><td><input class="budget-input" type="number" min="0" step="100" value="0" data-budget-index="2"></td></tr>
+          <tr><td>Hrana</td><td><input class="budget-input" type="number" min="0" step="100" value="0" data-budget-index="3"></td></tr>
+          <tr><td>Piće</td><td><input class="budget-input" type="number" min="0" step="100" value="0" data-budget-index="4"></td></tr>
+          <tr><td>Dekoracija / sitnice</td><td><input class="budget-input" type="number" min="0" step="100" value="0" data-budget-index="5"></td></tr>
+        </tbody>
+            <tfoot>
+              <tr class="budget-footer"><td><b>UKUPNO</b></td><td><b><span id="budgetTotal">13.000</span> RSD</b></td></tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tasks">
+    <div class="section-title"><h2>Checklist</h2><span>šta treba završiti do rođendana</span></div>
+    <div class="card">
+      <table id="taskTable">
+        <thead><tr><th>✓</th><th>Zadatak</th><th>Rok</th><th>Napomena</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="progress"><div id="taskProgress"></div></div>
+    </div>
+  </section>
+
+
+
+  <section id="activities">
+    <div class="section-title"><h2>Aktivnosti kod kuće</h2><span>banka ideja za 2–3 sata</span></div>
+    <div class="grid three">
+      <div class="card activity accent-b"><div class="tag">30–45 min</div><h3>🎮 Sony mini turnir</h3><p>Kratke partije uz rotaciju igrača. Dobar izbor kad stignu kući i žele nešto odmah.</p></div>
+      <div class="card activity accent-a"><div class="tag">20–40 min</div><h3>🎲 Društvena igra</h3><p>UNO, Dobble, Tickets to Ride...</p></div>
+      <div class="card activity accent-c"><div class="tag">20 min</div><h3>🎭 Pantomima</h3><p>Papirići sa pojmovima, dve ekipe, kratke runde. Minimalna priprema.</p></div>
+      <div class="card activity accent-b"><div class="tag">20 min</div><h3>🧱 LEGO challenge</h3><p>Zadatak tipa “napravi najčudnije vozilo” ili “najvišu stabilnu kulu”.</p></div>
+      <div class="card activity accent-d"><div class="tag">15–20 min</div><h3>🥤 Blind taste challenge</h3><p>Sa zatvorenim očima pogađaju različite sokove, grickalice, voće ili slatkiše.</p></div>
+      <div class="card activity accent-a"><div class="tag">30–60 min</div><h3>✨ Slobodna igra</h3><p>Namerno ostavljen prostor da sami izaberu šta žele, bez previše organizovanog programa.</p></div>
+    </div>
+  </section>
+
+  <div class="footer-note">Fićin b-day planner • podaci se čuvaju lokalno u browseru</div>
+</div>
+
+<script>
+const KEY='ficaBirthdayPlanner2026_v1';
+const base={
+ guests:Array.from({length:10},(_,i)=>({name:'',rsvp:'Čekamo'})),
+ tasks:[
+  {done:false,name:'Rezervisati Escape room sobe',due:'05.09.',note:'Divlji zapad + Put oko sveta'},
+  {done:false,name:'Napraviti finalnu listu gostiju',due:'07.09.',note:'Max 10 dece'},
+  {done:false,name:'Poslati pozivnice',due:'18.09.',note:'Tražiti potvrdu dolaska'},
+  {done:false,name:'Poručiti krofne u Pekari Miloš',due:'23.09.',note:'Poručiti unapred'},
+  {done:false,name:'Kupiti hranu i piće',due:'25.09.',note:''},
+  {done:false,name:'Pripremiti hranu',due:'26.09.',note:'Pre podne'},
+  {done:false,name:'Pripremiti Sony i društvene igre',due:'26.09.',note:'Proveriti kontrolere'}
+ ],
+ budget:[
+  {item:'Escape room – Divlji zapad',amount:6500},
+  {item:'Escape room – Put oko sveta',amount:6500},
+  {item:'Krofne – Pekara Miloš',amount:0},
+  {item:'Hrana',amount:0},
+  {item:'Piće',amount:0},
+  {item:'Dekoracija / sitnice',amount:0}
+ ]
+};
+let state;
+try{state=JSON.parse(localStorage.getItem(KEY))||base}catch(e){state=base}
+
+function save(){localStorage.setItem(KEY,JSON.stringify(state));renderStats()}
+
+function renderGuests(){
+ const tb=document.querySelector('#guestTable tbody'); tb.innerHTML='';
+ state.guests = state.guests.map(g=>({
+   name:g.name||'',
+   rsvp:g.rsvp||'Čekamo'
+ }));
+ state.guests.forEach((g,i)=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${i+1}</td>
+  <td><input type="text" value="${g.name.replaceAll('"','&quot;')}" data-k="name"></td>
+  <td><select class="rsvp-select" data-k="rsvp"><option>Čekamo</option><option>Da</option><option>Ne</option></select></td>`;
+  tr.querySelector('[data-k="rsvp"]').value=g.rsvp;
+  tr.querySelectorAll('input,select').forEach(el=>el.addEventListener('change',e=>{state.guests[i][e.target.dataset.k]=e.target.value;save()}));
+  tb.appendChild(tr);
+ })
+}
+function renderTasks(){
+ const tb=document.querySelector('#taskTable tbody'); tb.innerHTML='';
+ state.tasks.forEach((t,i)=>{
+  const tr=document.createElement('tr'); if(t.done)tr.className='task-done';
+  tr.innerHTML=`<td><input type="checkbox" ${t.done?'checked':''}></td><td>${t.name}</td><td>${t.due}</td><td>${t.note}</td>`;
+  tr.querySelector('input').addEventListener('change',e=>{state.tasks[i].done=e.target.checked;save();renderTasks()});
+  tb.appendChild(tr);
+ })
+ renderStats();
+}
+function renderBudget(){
+ const tb=document.querySelector('#budgetTable tbody'); tb.innerHTML='';
+ state.budget.forEach((b,i)=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><input type="text" value="${b.item.replaceAll('"','&quot;')}"></td><td><input type="number" min="0" step="100" value="${b.amount}"></td>`;
+  const [name,amt]=tr.querySelectorAll('input');
+  name.addEventListener('change',e=>{state.budget[i].item=e.target.value;save()});
+  amt.addEventListener('input',e=>{state.budget[i].amount=Number(e.target.value||0);save();renderStats()});
+  tb.appendChild(tr);
+ })
+}
+function renderStats(){
+ const confirmed=state.guests.filter(g=>g.rsvp==='Da').length;
+ document.getElementById('guestCount').textContent=confirmed;
+ const waiting=state.guests.filter(g=>g.rsvp==='Čekamo').length;
+ const no=state.guests.filter(g=>g.rsvp==='Ne').length;
+ const side=document.getElementById('guestCountSide'); if(side) side.textContent=confirmed;
+ const waitEl=document.getElementById('waitingCount'); if(waitEl) waitEl.textContent=waiting;
+ const noEl=document.getElementById('noCount'); if(noEl) noEl.textContent=no;
+ const done=state.tasks.filter(t=>t.done).length,total=state.tasks.length;
+ document.getElementById('taskDone').textContent=done;
+ document.getElementById('taskTotal').textContent=total;
+ document.getElementById('taskProgress').style.width=(total?done/total*100:0)+'%';
+ const sum=state.budget.reduce((a,b)=>a+Number(b.amount||0),0);
+ const f=new Intl.NumberFormat('sr-RS');
+ document.getElementById('budgetTotal').textContent=f.format(sum);
+ document.getElementById('overviewBudget').textContent=f.format(sum);
+}
+function countdown(){
+ const target=new Date('2026-09-26T16:00:00+02:00');
+ const now=new Date(); const d=target-now;
+ const el=document.getElementById('countdown');
+ if(d<=0){el.textContent='Vreme je za rođendan! 🎉';return}
+ const days=Math.floor(d/86400000), hrs=Math.floor((d%86400000)/3600000);
+ el.textContent=`Još ${days} dana i ${hrs} h do početka`;
+}
+renderGuests();renderTasks();renderBudget();renderStats();countdown();
+setInterval(countdown,60000);
+</script>
+</body>
+</html>
