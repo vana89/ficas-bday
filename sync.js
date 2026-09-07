@@ -1,4 +1,4 @@
-const SUPABASE_URL='https://jylkcztyuccjvxtjakscj.supabase.co';
+const SUPABASE_URL='https://jylkcztuccjvxtjakscj.supabase.co';
 const SUPABASE_KEY='sb_publishable_Z4eeyBX7LT-Dn1sqmI53gw_GBPPCtDP';
 const STATE_ID='fica-2026';
 
