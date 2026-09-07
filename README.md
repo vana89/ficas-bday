@@ -2,7 +2,16 @@
 
 Mali statički web planner za organizaciju Fićinog 9. rođendana.
 
-Live sajt: https://vana89.github.io/ficas-bday/
+## 🔗 Project links
+
+| Servis | Link | Namena |
+| --- | --- | --- |
+| 🌐 Aplikacija | https://vana89.github.io/ficas-bday/ | Live Birthday Planner |
+| 💻 GitHub | https://github.com/vana89/ficas-bday | Source code i istorija izmena |
+| 🗄️ Supabase | https://supabase.com/dashboard/project/jylkcztuccjvxtjakscj | Online baza i API |
+| 🚀 GitHub Pages | https://github.com/vana89/ficas-bday/settings/pages | Hosting / deployment podešavanja |
+
+> U README ne čuvamo passworde, secret/service-role ključeve niti druge privatne credentials.
 
 ## Arhitektura
 
