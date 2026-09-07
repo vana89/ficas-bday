@@ -13,6 +13,16 @@ Mali statički web planner za organizaciju Fićinog 9. rođendana.
 
 > U README ne čuvamo passworde, secret/service-role ključeve niti druge privatne credentials.
 
+## 🎨 Pozivnica
+
+Finalna pozivnica za rođendan čuva se u repozitorijumu kao:
+
+[`assets/invitation.png`](assets/invitation.png)
+
+Ovaj fajl je source of truth za finalnu verziju pozivnice i treba ga zameniti kada se odobri nova verzija dizajna.
+
+![Fićin 9. rođendan – pozivnica](assets/invitation.png)
+
 ## Arhitektura
 
 ```text
@@ -106,6 +116,7 @@ Pošto je ovo mali privatni porodični planner, pristup je namerno jednostavan: 
 
 - `index.html` — UI, planner logika i lokalno stanje
 - `sync.js` — Supabase sinhronizacija
+- `assets/invitation.png` — finalna pozivnica za rođendan
 
 ## Trenutni event
 
