@@ -35,11 +35,7 @@ async function saveShared(){
     const r=await fetch(`${SUPABASE_URL}/rest/v1/birthday_state?on_conflict=id`,{
       method:'POST',
       headers:{...sharedHeaders(),Prefer:'resolution=merge-duplicates,return=representation'},
-      body:JSON.stringify([{
-        id:STATE_ID,
-        data:state,
-        updated_at:new Date().toISOString()
-      }])
+      body:JSON.stringify([{id:STATE_ID,data:state,updated_at:new Date().toISOString()}])
     });
     const text=await r.text();
     if(!r.ok){
@@ -58,9 +54,7 @@ async function saveShared(){
 
 async function loadShared(initial=false){
   try{
-    const r=await fetch(`${SUPABASE_URL}/rest/v1/birthday_state?id=eq.${encodeURIComponent(STATE_ID)}&select=data,updated_at`,{
-      headers:sharedHeaders(),cache:'no-store'
-    });
+    const r=await fetch(`${SUPABASE_URL}/rest/v1/birthday_state?id=eq.${encodeURIComponent(STATE_ID)}&select=data,updated_at`,{headers:sharedHeaders(),cache:'no-store'});
     if(!r.ok){
       console.warn('Shared load failed',r.status,await r.text());
       setSyncStatus(`Greška pri učitavanju (${r.status})`,false);
@@ -70,14 +64,10 @@ async function loadShared(initial=false){
     if(!rows.length) return;
     const d=rows[0].data||{};
     const empty=['guests','tasks','budget'].every(k=>Array.isArray(d[k])&&d[k].length===0);
-    if(initial&&empty){
-      await saveShared();
-      return;
-    }
+    if(initial&&empty){await saveShared();return;}
     if(!empty){
-      // Do not overwrite someone while they are actively editing a field.
       const active=document.activeElement;
-      const editing=active && (active.matches('input,select,textarea'));
+      const editing=active && active.matches('input,select,textarea');
       if(editing) return;
       state={
         guests:Array.isArray(d.guests)&&d.guests.length?d.guests:base.guests,
@@ -96,11 +86,7 @@ async function loadShared(initial=false){
 
 ensureSyncUi();
 
-// Existing page handlers update `state` first; these handlers then persist it online.
-document.addEventListener('change',()=>{
-  setTimeout(saveShared,0);
-});
-
+document.addEventListener('change',()=>setTimeout(saveShared,0));
 let inputTimer;
 document.addEventListener('input',e=>{
   if(!e.target.matches('#guestTable input,#budgetTable input')) return;
@@ -108,6 +94,27 @@ document.addEventListener('input',e=>{
   setSyncStatus('Promene nisu još sačuvane');
   inputTimer=setTimeout(saveShared,700);
 });
+
+// Aktualni termin: Escape room je rezervisan za 17:00.
+function applyBookedSchedule(){
+  const start=document.querySelector('.event-card .event-row:nth-of-type(2) .event-value');
+  if(start) start.textContent='u 17:00';
+  const times=['16:45','17:00','18:15','18:30','19:30'];
+  document.querySelectorAll('#schedule .time').forEach((el,i)=>{if(times[i]) el.textContent=times[i];});
+}
+function bookedCountdown(){
+  const el=document.getElementById('countdown');
+  if(!el) return;
+  const target=new Date('2026-09-26T17:00:00+02:00');
+  const d=target-new Date();
+  if(d<=0){el.textContent='Vreme je za rođendan! 🎉';return;}
+  const days=Math.floor(d/86400000);
+  const hrs=Math.floor((d%86400000)/3600000);
+  el.textContent=`Još ${days} dana i ${hrs} h do početka`;
+}
+applyBookedSchedule();
+bookedCountdown();
+setInterval(bookedCountdown,10000);
 
 loadShared(true);
 setInterval(()=>loadShared(false),4000);
