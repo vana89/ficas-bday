@@ -1,27 +1,39 @@
-# Fićin 9. rođendan 🎉
+# Family Birthday Planner 🎂
 
-Mali statički web planner za organizaciju Fićinog 9. rođendana.
+Porodični statički web planner za organizaciju više rođendana u jednoj aplikaciji.
 
 ## 🔗 Project links
 
 | Servis | Link | Namena |
 | --- | --- | --- |
-| 🌐 Aplikacija | https://vana89.github.io/ficas-bday/ | Live Birthday Planner |
+| 🌐 Aplikacija | https://vana89.github.io/ficas-bday/ | Family Birthday Planner |
 | 💻 GitHub | https://github.com/vana89/ficas-bday | Source code i istorija izmena |
 | 🗄️ Supabase | https://supabase.com/dashboard/project/jylkcztuccjvxtjakscj | Online baza i API |
 | 🚀 GitHub Pages | https://github.com/vana89/ficas-bday/settings/pages | Hosting / deployment podešavanja |
 
 > U README ne čuvamo passworde, secret/service-role ključeve niti druge privatne credentials.
 
-## 🎨 Pozivnica
+## Struktura aplikacije
 
-Finalna pozivnica za rođendan čuva se u repozitorijumu kao:
+Glavna `index.html` stranica je Family Birthday Planner i služi za izbor rođendana.
 
-[`assets/invitation.png`](assets/invitation.png)
+```text
+/
+├── index.html          Family Birthday Planner / izbor eventa
+├── fica/
+│   └── index.html      Fićin planner
+├── uki/
+│   └── index.html      Ukijev planner
+├── sync.js             zajednička Supabase sinhronizacija
+└── assets/
+    └── invitation.png  Fićina pozivnica
+```
 
-Ovaj fajl je source of truth za finalnu verziju pozivnice i treba ga zameniti kada se odobri nova verzija dizajna.
+Live stranice:
 
-![Fićin 9. rođendan – pozivnica](assets/invitation.png)
+- Family planner: https://vana89.github.io/ficas-bday/
+- Fićin planner: https://vana89.github.io/ficas-bday/fica/
+- Ukijev planner: https://vana89.github.io/ficas-bday/uki/
 
 ## Arhitektura
 
@@ -34,8 +46,8 @@ Ovaj fajl je source of truth za finalnu verziju pozivnice i treba ga zameniti ka
            ▼
 ┌──────────────────────┐
 │    GitHub Pages      │
-│  statički hosting    │
-│  HTML / CSS / JS     │
+│ Family index +       │
+│ birthday planners    │
 └──────────┬───────────┘
            │ REST API
            ▼
@@ -48,19 +60,30 @@ Ovaj fajl je source of truth za finalnu verziju pozivnice i treba ga zameniti ka
 
 ## Kako radi
 
-Frontend je obična statička web aplikacija napravljena u HTML-u, CSS-u i JavaScript-u. Kod se nalazi u ovom GitHub repozitorijumu, a GitHub Pages ga objavljuje kao javni sajt.
+Frontend je obična statička web aplikacija napravljena u HTML-u, CSS-u i JavaScript-u. GitHub Pages objavljuje `main` branch kao javni sajt.
 
-GitHub Pages ovde služi kao statički hosting. Ne postoji poseban aplikacioni backend server koji izvršava naš kod.
+Svaki rođendan ima svoju HTML stranicu, ali koristi isti `sync.js` za Supabase sinhronizaciju.
 
-Zajednički podaci se čuvaju u Supabase-u. Browser direktno poziva Supabase REST API koristeći publishable key i RLS pravila.
-
-Trenutno se online sinhronizuju:
+Zajednički podaci koji se sinhronizuju su:
 
 - Gosti i RSVP status
 - Budžet
 - Checklist
 
-Više ljudi može da otvori isti link i vidi iste podatke.
+`localStorage` ostaje samo pomoćna lokalna kopija. Supabase je source of truth za zajedničke podatke.
+
+## Razdvajanje podataka po rođendanu
+
+Supabase tabela `birthday_state` koristi zaseban `id` za svaki event:
+
+```text
+Fića: fica-2026
+Uki:  uki-2026
+```
+
+`sync.js` čita `data-event-id` sa odgovarajuće birthday stranice i na osnovu njega učitava i čuva pravi shared state. Zato se Fićini i Ukijevi gosti, budžet i checklist ne mešaju.
+
+Za dodavanje sledećeg rođendana dovoljno je napraviti novu birthday stranicu i dodeliti joj novi event ID.
 
 ## Tehnologije
 
@@ -70,57 +93,28 @@ Više ljudi može da otvori isti link i vidi iste podatke.
 - Supabase — PostgreSQL baza + REST API
 - Supabase Row Level Security (RLS)
 
-Za trenutni obim projekta koriste se free tier opcije GitHub-a i Supabase-a.
-
 ## Deployment
 
-Deployment je automatski.
-
-Tok izgleda ovako:
+Deployment je automatski:
 
 ```text
 Izmena koda
    ↓
-Commit / push na main branch
+Commit na main branch
    ↓
 GitHub Pages deployment
    ↓
-Nova verzija dostupna na istom URL-u
+Nova verzija na postojećem live URL-u
 ```
 
-Nema FTP-a, ručnog kopiranja fajlova na server niti posebnog backend deployment-a.
+## Security
 
-GitHub Pages-u obično treba kratko vreme da objavi novi commit, pa browser ponekad zahteva hard refresh zbog cache-a.
+Publishable Supabase key sme da bude u frontend aplikaciji. Secret / service_role key ne sme biti u browser kodu, GitHub repozitorijumu ili dokumentaciji.
 
-## Podaci i sinhronizacija
+## Pozivnica
 
-Supabase tabela koristi jedan shared state zapis za ovaj događaj:
+Fićina finalna pozivnica trenutno se čuva kao:
 
-```text
-id: fica-2026
-```
+[`assets/invitation.png`](assets/invitation.png)
 
-U JSON podatku se čuvaju guests, tasks i budget.
-
-Frontend periodično proverava Supabase i osvežava lokalni prikaz, dok izmene korisnika šalje nazad u bazu.
-
-`localStorage` se i dalje koristi kao lokalna pomoćna kopija, ali Supabase je izvor zajedničkih podataka između uređaja.
-
-## Security napomena
-
-Publishable Supabase key sme da bude u frontend aplikaciji. Secret / service_role key ne sme biti u browser kodu ili GitHub repozitorijumu.
-
-Pošto je ovo mali privatni porodični planner, pristup je namerno jednostavan: svako ko ima link može da menja zajedničke podatke. Za ozbiljniju javnu aplikaciju trebalo bi dodati autentikaciju i stroža RLS pravila.
-
-## Glavni fajlovi
-
-- `index.html` — UI, planner logika i lokalno stanje
-- `sync.js` — Supabase sinhronizacija
-- `assets/invitation.png` — finalna pozivnica za rođendan
-
-## Trenutni event
-
-- Datum: 26. septembar 2026.
-- Escape room: 17:00
-- Lokacija: PIN Escape Rooms 3 – Sklonište
-- Nakon toga: druženje kod kuće
+Kasnije se asseti mogu organizovati po eventu ako i Ukijev planner dobije zasebne slike i pozivnicu.
