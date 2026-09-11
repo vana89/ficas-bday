@@ -5,34 +5,17 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Family Birthday Planner 🎂</title>
 <style>
-:root{--ink:#182235;--muted:#6d7685;--line:#e9e3df;--shadow:0 18px 46px rgba(45,51,64,.10);--teal:#167b73;--violet:#6655aa}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:radial-gradient(circle at 15% 10%,#e7f5f2 0,transparent 28%),radial-gradient(circle at 86% 14%,#eee8fb 0,transparent 30%),linear-gradient(180deg,#fbfaf8 0%,#f4f1ee 100%)}
-.wrap{max-width:1080px;margin:0 auto;padding:64px 22px 74px}.top{text-align:center;max-width:720px;margin:0 auto 42px}.eyebrow{font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:850;color:#7e7680}.cake{width:66px;height:66px;margin:0 auto 18px;border-radius:22px;display:grid;place-items:center;font-size:34px;background:rgba(255,255,255,.9);border:1px solid var(--line);box-shadow:0 10px 26px rgba(50,55,66,.08)}h1{font-size:54px;line-height:1.02;letter-spacing:-.035em;margin:10px 0 14px}.lead{font-size:18px;line-height:1.6;color:var(--muted);margin:0}.cards{display:grid;grid-template-columns:1fr 1fr;gap:24px}.birthday{position:relative;overflow:hidden;text-decoration:none;color:inherit;border-radius:30px;border:1px solid var(--line);background:rgba(255,255,255,.9);box-shadow:var(--shadow);padding:30px;min-height:310px;display:flex;flex-direction:column;transition:transform .18s ease,box-shadow .18s ease}.birthday:hover{transform:translateY(-4px);box-shadow:0 24px 56px rgba(45,51,64,.14)}.birthday:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-55px;top:-55px;opacity:.72}.fica:after{background:#d8f0ec}.uki:after{background:#e6def7}.badge{position:relative;z-index:1;display:inline-flex;align-self:flex-start;padding:7px 12px;border-radius:999px;font-size:12px;font-weight:850;letter-spacing:.04em}.fica .badge{background:#dff2ee;color:var(--teal)}.uki .badge{background:#ece6fa;color:var(--violet)}.name{position:relative;z-index:1;font-size:35px;font-weight:900;letter-spacing:-.025em;margin:22px 0 8px}.desc{position:relative;z-index:1;color:var(--muted);font-size:15px;line-height:1.55;max-width:80%}.meta{position:relative;z-index:1;margin-top:22px;display:grid;gap:7px;font-size:14px;color:#475266}.open{position:relative;z-index:1;margin-top:auto;padding-top:24px;font-weight:850}.fica .open{color:var(--teal)}.uki .open{color:var(--violet)}.note{margin-top:28px;text-align:center;color:#8b8f98;font-size:13px}@media(max-width:760px){.wrap{padding:40px 14px 60px}h1{font-size:42px}.cards{grid-template-columns:1fr}.birthday{min-height:270px}.desc{max-width:90%}}@media(max-width:430px){h1{font-size:36px}.lead{font-size:16px}.birthday{padding:24px}.name{font-size:31px}}
+:root{--ink:#182235;--muted:#6d7685;--line:#e9e3df;--shadow:0 18px 46px rgba(45,51,64,.10);--teal:#167b73;--blue:#39758a;--yellow:#a77b22}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:radial-gradient(circle at 15% 10%,#e7f5f2 0,transparent 28%),radial-gradient(circle at 86% 14%,#f8edc8 0,transparent 30%),linear-gradient(180deg,#fbfaf8 0%,#f4f1ee 100%)}
+.wrap{max-width:1080px;margin:0 auto;padding:64px 22px 74px}.top{text-align:center;max-width:720px;margin:0 auto 42px}.eyebrow{font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:850;color:#7e7680}.cake{width:66px;height:66px;margin:0 auto 18px;border-radius:22px;display:grid;place-items:center;font-size:34px;background:rgba(255,255,255,.9);border:1px solid var(--line);box-shadow:0 10px 26px rgba(50,55,66,.08)}h1{font-size:54px;line-height:1.02;letter-spacing:-.035em;margin:10px 0 14px}.lead{font-size:18px;line-height:1.6;color:var(--muted);margin:0}.cards{display:grid;grid-template-columns:1fr 1fr;gap:24px}.birthday{position:relative;overflow:hidden;text-decoration:none;color:inherit;border-radius:30px;border:1px solid var(--line);background:rgba(255,255,255,.9);box-shadow:var(--shadow);padding:30px;min-height:310px;display:flex;flex-direction:column;transition:transform .18s ease,box-shadow .18s ease}.birthday:hover{transform:translateY(-4px);box-shadow:0 24px 56px rgba(45,51,64,.14)}.birthday:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-55px;top:-55px;opacity:.72}.fica:after{background:#d8f0ec}.uki:after{background:#f5dfa0}.badge{position:relative;z-index:1;display:inline-flex;align-self:flex-start;padding:7px 12px;border-radius:999px;font-size:12px;font-weight:850;letter-spacing:.04em}.fica .badge{background:#dff2ee;color:var(--teal)}.uki .badge{background:#dceef4;color:var(--blue)}.name{position:relative;z-index:1;font-size:35px;font-weight:900;letter-spacing:-.025em;margin:22px 0 8px}.desc{position:relative;z-index:1;color:var(--muted);font-size:15px;line-height:1.55;max-width:80%}.meta{position:relative;z-index:1;margin-top:22px;display:grid;gap:7px;font-size:14px;color:#475266}.open{position:relative;z-index:1;margin-top:auto;padding-top:24px;font-weight:850}.fica .open{color:var(--teal)}.uki .open{color:var(--blue)}.note{margin-top:28px;text-align:center;color:#8b8f98;font-size:13px}@media(max-width:760px){.wrap{padding:40px 14px 60px}h1{font-size:42px}.cards{grid-template-columns:1fr}.birthday{min-height:270px}.desc{max-width:90%}}@media(max-width:430px){h1{font-size:36px}.lead{font-size:16px}.birthday{padding:24px}.name{font-size:31px}}
 </style>
 </head>
 <body>
 <main class="wrap">
-  <header class="top">
-    <div class="cake">🎂</div>
-    <div class="eyebrow">Family planner</div>
-    <h1>Birthday Planner</h1>
-    <p class="lead">Svi porodični rođendani na jednom mestu. Izaberi planner koji želiš da otvoriš.</p>
-  </header>
+  <header class="top"><div class="cake">🎂</div><div class="eyebrow">Family planner</div><h1>Birthday Planner</h1><p class="lead">Svi porodični rođendani na jednom mestu. Izaberi planner koji želiš da otvoriš.</p></header>
   <section class="cards" aria-label="Rođendani">
-    <a class="birthday fica" href="fica/">
-      <span class="badge">26. septembar 2026.</span>
-      <div class="name">Fićin 9. rođendan 🎉</div>
-      <div class="desc">Escape room avantura, druženje kod kuće i kompletna organizacija proslave.</div>
-      <div class="meta"><span>📍 PIN Escape Rooms 3 + kuća</span><span>🕔 Početak u 17:00</span></div>
-      <div class="open">Otvori Fićin planner →</div>
-    </a>
-    <a class="birthday uki" href="uki/">
-      <span class="badge">Novi planner</span>
-      <div class="name">Ukijev rođendan ✨</div>
-      <div class="desc">Poseban prostor za Ukijevu proslavu, sa gostima, checklistom, budžetom i idejama.</div>
-      <div class="meta"><span>📅 Datum ćemo dodati</span><span>🎈 Koncept u pripremi</span></div>
-      <div class="open">Otvori Ukijev planner →</div>
-    </a>
+    <a class="birthday fica" href="fica/"><span class="badge">26. septembar 2026.</span><div class="name">Fićin 9. rođendan 🎉</div><div class="desc">Escape room avantura, druženje kod kuće i kompletna organizacija proslave.</div><div class="meta"><span>📍 PIN Escape Rooms 3 + kuća</span><span>🕔 Početak u 17:00</span></div><div class="open">Otvori Fićin planner →</div></a>
+    <a class="birthday uki" href="uki/"><span class="badge">24. oktobar 2026.</span><div class="name">Ukijev 6. rođendan 🎉</div><div class="desc">Rođendanska proslava u Cosmo Play igraonici na Ušću.</div><div class="meta"><span>📍 Cosmo Play • Ušće</span><span>🕙 10:00–12:30</span></div><div class="open">Otvori Ukijev planner →</div></a>
   </section>
   <div class="note">Family Birthday Planner • zajednički podaci svakog rođendana čuvaju se odvojeno</div>
 </main>
