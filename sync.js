@@ -18,7 +18,10 @@ function migrateSharedState(data){
     if(!tasks.some(t=>t.name==='Poslati pozivnice')){tasks.push({done:false,name:'Poslati pozivnice',due:'',note:'Tražiti potvrdu dolaska'});changed=true;}
   }
   if(STATE_ID==='fica-2026'){
-    rename('Poručiti krofne u Pekari Miloš','Poručiti krofne');
+    tasks.forEach(t=>{
+      if(typeof t.name==='string' && /poručiti\s+krofne/i.test(t.name) && t.name!=='Poručiti krofne'){t.name='Poručiti krofne';changed=true;}
+      if(typeof t.note==='string' && /pekara\s+miloš/i.test(t.note)){t.note=t.note.replace(/\s*[•\-–—]?\s*Pekara\s+Miloš\s*/gi,'').trim();changed=true;}
+    });
   }
   next.tasks=tasks;
   return {data:next,changed};
