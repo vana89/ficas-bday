@@ -6,16 +6,20 @@ function sharedHeaders(){return {apikey:SUPABASE_KEY,'Content-Type':'application
 function ensureSyncUi(){if(document.getElementById('syncStatus'))return;const note=document.querySelector('#guests .small-note');if(!note)return;const wrap=document.createElement('div');wrap.style.cssText='display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px';wrap.innerHTML='<button id="syncSaveBtn" type="button" style="border:1px solid #c7e3de;background:linear-gradient(135deg,#d8efeb,#bfe3dd);color:#163f3b;border-radius:12px;padding:8px 12px;font:inherit;font-weight:800;cursor:pointer">Sačuvaj</button><span id="syncStatus" style="font-size:12px;color:#667486">Spremno</span>';note.after(wrap);document.getElementById('syncSaveBtn').addEventListener('click',saveShared);}
 function setSyncStatus(text,ok=true){const el=document.getElementById('syncStatus');if(!el)return;el.textContent=text;el.style.color=ok?'#167b73':'#b64d36';}
 function migrateSharedState(data){
-  if(STATE_ID!=='uki-2026')return {data,changed:false};
   const next={...data};
   const tasks=Array.isArray(data.tasks)?data.tasks.map(t=>({...t})):[];
   let changed=false;
   const rename=(from,to)=>{const t=tasks.find(x=>x.name===from);if(t){t.name=to;changed=true;}};
-  rename('Odabrati i poručiti ketering','Poručiti ketering');
-  rename('Odabrati i poručiti tortu','Poručiti tortu');
-  if(!tasks.some(t=>t.name==='Poručiti ketering')){tasks.push({done:false,name:'Poručiti ketering',due:'',note:''});changed=true;}
-  if(!tasks.some(t=>t.name==='Poručiti tortu')){tasks.push({done:false,name:'Poručiti tortu',due:'',note:''});changed=true;}
-  if(!tasks.some(t=>t.name==='Poslati pozivnice')){tasks.push({done:false,name:'Poslati pozivnice',due:'',note:'Tražiti potvrdu dolaska'});changed=true;}
+  if(STATE_ID==='uki-2026'){
+    rename('Odabrati i poručiti ketering','Poručiti ketering');
+    rename('Odabrati i poručiti tortu','Poručiti tortu');
+    if(!tasks.some(t=>t.name==='Poručiti ketering')){tasks.push({done:false,name:'Poručiti ketering',due:'',note:''});changed=true;}
+    if(!tasks.some(t=>t.name==='Poručiti tortu')){tasks.push({done:false,name:'Poručiti tortu',due:'',note:''});changed=true;}
+    if(!tasks.some(t=>t.name==='Poslati pozivnice')){tasks.push({done:false,name:'Poslati pozivnice',due:'',note:'Tražiti potvrdu dolaska'});changed=true;}
+  }
+  if(STATE_ID==='fica-2026'){
+    rename('Poručiti krofne u Pekari Miloš','Poručiti krofne');
+  }
   next.tasks=tasks;
   return {data:next,changed};
 }
@@ -25,8 +29,7 @@ ensureSyncUi();
 document.addEventListener('change',()=>setTimeout(saveShared,0));
 let inputTimer;document.addEventListener('input',e=>{if(!e.target.matches('#guestTable input,#budgetTable input'))return;clearTimeout(inputTimer);setSyncStatus('Promene nisu još sačuvane');inputTimer=setTimeout(saveShared,700);});
 
-// Fićin escape room je rezervisan za 17:00.
-function applyFicaBookedSchedule(){if(STATE_ID!=='fica-2026')return;const rows=document.querySelectorAll('.event-card .event-row');const start=rows.length?rows[rows.length-1].querySelector('.event-value'):null;if(start)start.textContent='u 17:00';const times=['16:45','17:00','18:15','18:30','19:30'];document.querySelectorAll('#schedule .time').forEach((el,i)=>{if(times[i])el.textContent=times[i];});}
+function applyFicaBookedSchedule(){if(STATE_ID!=='fica-2026')return;const rows=document.querySelectorAll('.event-card .event-row');const start=rows.length?rows[rows.length-1].querySelector('.event-value'):null;if(start)start.textContent='u 17:00';const times=['16:45','17:00','18:15','18:30','19:30'];document.querySelectorAll('#schedule .time').forEach((el,i)=>{if(times[i])el.textContent=times[i];});const donutNote=document.querySelector('#schedule .timeline-item:last-child .desc small');if(donutNote)donutNote.textContent='Umesto rođendanske torte';}
 function ficaCountdown(){if(STATE_ID!=='fica-2026')return;const el=document.getElementById('countdown');if(!el)return;const target=new Date('2026-09-26T17:00:00+02:00');const d=target-new Date();if(d<=0){el.textContent='Vreme je za rođendan! 🎉';return;}const days=Math.floor(d/86400000),hrs=Math.floor((d%86400000)/3600000);el.textContent=`Još ${days} dana i ${hrs} h do početka`;}
 applyFicaBookedSchedule();ficaCountdown();if(STATE_ID==='fica-2026')setInterval(ficaCountdown,10000);
 loadShared(true);setInterval(()=>loadShared(false),4000);
