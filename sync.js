@@ -9,8 +9,8 @@ function ensureSyncUi(){
   const note=document.querySelector('#guests .small-note');if(!note)return;
   const uki=STATE_ID==='uki-2026';
   const wrap=document.createElement('div');wrap.id='guestActions';
-  wrap.style.cssText='display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px';
-  wrap.innerHTML=`<button id="syncSaveBtn" type="button" style="border:1px solid ${uki?'#c9e0e8':'#c7e3de'};background:${uki?'#e8f3f7':'linear-gradient(135deg,#d8efeb,#bfe3dd)'};color:${uki?'#315f70':'#163f3b'};border-radius:12px;padding:8px 12px;font:inherit;font-weight:800;cursor:pointer">Sačuvaj</button><span id="syncStatus" style="font-size:12px;color:${uki?'#39758a':'#667486'}">Spremno</span>`;
+  wrap.style.cssText='display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px';
+  wrap.innerHTML=`<button id="syncSaveBtn" type="button" style="border:1px solid ${uki?'#c9e0e8':'#c7e3de'};background:${uki?'#e8f3f7':'linear-gradient(135deg,#d8efeb,#bfe3dd)'};color:${uki?'#315f70':'#163f3b'};border-radius:12px;width:132px;height:40px;padding:0 12px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center">Sačuvaj</button><span id="syncStatus" style="font-size:12px;color:${uki?'#39758a':'#667486'}">Spremno</span>`;
   note.after(wrap);document.getElementById('syncSaveBtn').addEventListener('click',saveShared);
 }
 
@@ -18,9 +18,10 @@ function ensureGuestAddButton(){
   if(document.getElementById('addGuestBtn'))return;
   const guests=document.getElementById('guests');if(!guests)return;
   const btn=document.createElement('button');btn.id='addGuestBtn';btn.type='button';btn.textContent='＋ Dodaj gosta';
-  btn.style.cssText=STATE_ID==='uki-2026'?'border:1px solid #d2e5eb;background:#f8fcfd;color:#315f70;border-radius:12px;padding:8px 12px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(57,117,138,.06)':'border:1px solid #d8e3e3;background:#fff;color:#315f70;border-radius:12px;padding:8px 12px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(57,117,138,.06)';
+  btn.style.cssText=STATE_ID==='uki-2026'?'border:1px solid #d2e5eb;background:#f8fcfd;color:#315f70;border-radius:12px;width:132px;height:40px;padding:0 12px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(57,117,138,.06);display:inline-flex;align-items:center;justify-content:center':'border:1px solid #d8e3e3;background:#fff;color:#315f70;border-radius:12px;width:132px;height:40px;padding:0 12px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(57,117,138,.06);display:inline-flex;align-items:center;justify-content:center';
   btn.addEventListener('click',async()=>{if(!Array.isArray(state.guests))state.guests=[];state.guests.push(STATE_ID==='uki-2026'?{name:'',adults:0,childNames:'',children:0,rsvp:'Čekamo'}:{name:'',rsvp:'Čekamo'});localStorage.setItem(KEY,JSON.stringify(state));renderGuests();renderStats();setSyncStatus('Čuvam…');await saveShared();const rows=document.querySelectorAll('#guestTable tbody tr'),last=rows[rows.length-1];if(last){const input=last.querySelector('input');if(input)input.focus();}});
-  if(STATE_ID==='uki-2026'){const actions=document.getElementById('guestActions'),saveBtn=document.getElementById('syncSaveBtn');if(actions&&saveBtn)actions.insertBefore(btn,saveBtn);else guests.appendChild(btn);}else{const head=guests.querySelector('.panel-head');if(head)head.appendChild(btn);}
+  const actions=document.getElementById('guestActions'),saveBtn=document.getElementById('syncSaveBtn');
+  if(actions&&saveBtn)actions.insertBefore(btn,saveBtn);else guests.appendChild(btn);
 }
 function setSyncStatus(text,ok=true){const el=document.getElementById('syncStatus');if(!el)return;el.textContent=text;el.style.color=ok?(STATE_ID==='uki-2026'?'#39758a':'#167b73'):'#b64d36';}
 function normalizeFicaTasks(tasks){let changed=false;const out=(Array.isArray(tasks)?tasks:[]).map(t=>{const n={...t};if(typeof n.name==='string'&&/krofne/i.test(n.name)&&n.name!=='Poručiti krofne'){n.name='Poručiti krofne';changed=true;}if(typeof n.note==='string'&&/pekara\s+miloš/i.test(n.note)){n.note=n.note.replace(/\s*[•\-–—]?\s*Pekara\s+Miloš\s*/gi,'').trim();changed=true;}return n;});return {tasks:out,changed};}
