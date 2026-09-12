@@ -72,6 +72,12 @@ Zajednički podaci koji se sinhronizuju su:
 
 `localStorage` ostaje samo pomoćna lokalna kopija. Supabase je source of truth za zajedničke podatke.
 
+## Pravilo za screenshotove i slike
+
+Kada korisnik pošalje screenshot ili sliku aplikacije i uz nju opiše željenu izmenu, slika služi samo kao vizuelna referenca za deo interfejsa na koji se izmena odnosi.
+
+Ne treba menjati, retuširati niti generisati novu sliku na osnovu screenshota. Izmena se uvek radi u stvarnoj aplikaciji, odnosno u odgovarajućem HTML/CSS/JavaScript kodu u ovom GitHub repository-ju, osim ako korisnik izričito traži izmenu same slike.
+
 ## Razdvajanje podataka po rođendanu
 
 Supabase tabela `birthday_state` koristi zaseban `id` za svaki event:
